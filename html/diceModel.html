@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.pip {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin: 4px;
+
+  background-color: #333;
+  box-shadow: inset 0 3px #111, inset 0 -3px #555;
+}
+.onepoint{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.twopoint{
+	display: flex;
+	justify-content: space-between;
+}
+.twopoint .pip:nth-of-type(2){
+	align-self: flex-end;
+}
+.threepoint{
+	display: flex;
+	justify-content: space-between;
+}
+.threepoint .pip:nth-of-type(2){
+	align-self: center;
+}
+.threepoint .pip:nth-of-type(3){
+	align-self: flex-end;
+}
+.fourpoint{
+	display: flex;
+	justify-content: space-between;
+}
+.fourpoint .column{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.fivepoint{
+	display: flex;
+	justify-content: space-between;
+}
+.fivepoint .column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+  
+.fivepoint .column:nth-of-type(2) {
+  justify-content: center;
+}
+
+[class$="point"] {
+  margin: 16px;
+  padding: 4px;
+  
+  background-color: #e7e7e7;
+  width: 104px;
+  height: 104px;
+  object-fit: contain;
+  
+  box-shadow:
+    inset 0 5px white, 
+    inset 0 -5px #bbb,
+    inset 5px 0 #d7d7d7, 
+    inset -5px 0 #d7d7d7;
+  
+  border-radius: 10%;
+}
+		</style>
+	</head>
+	<body>
+		<div class="onepoint">
+			<span class="pip"></span>
+		</div>
+		<div class="twopoint">
+			<span class="pip"></span><span class="pip"></span>
+		</div>
+		<div class="threepoint">
+			<span class="pip"></span><span class="pip"></span><span class="pip"></span>
+		</div>
+		<div class="fourpoint">
+			<div class="column">
+				<span class="pip"></span><span class="pip"></span>
+			</div>
+			<div class="column">
+				<span class="pip"></span><span class="pip"></span>
+			</div>
+			
+		</div>
+		<div class="fivepoint">
+			<div class="column">
+				<span class="pip"></span><span class="pip"></span>
+			</div>
+			<div class="column">
+				<span class="pip"></span>
+			</div>
+			<div class="column">
+				<span class="pip"></span><span class="pip"></span>
+			</div>
+			
+		</div>
+		<div class="fourpoint">
+			<div class="column">
+				<span class="pip"></span><span class="pip"></span><span class="pip"></span>
+			</div>
+
+			<div class="column">
+				<span class="pip"></span><span class="pip"></span><span class="pip"></span>
+			</div>
+			
+		</div>
+	</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			<span v-model="arr">
+				{{arr}}
+			</span>
+			<button type="button" @click="showArr(QuickSort(arr,0,arr.length))">click</button>
+			
+		</div>
+		<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+		<script type="text/javascript">
+			
+					var arr = [3,5,77,4,22,7,21,2,66,98,132];
+					function QuickSort(arr,start,end){
+						if(arr.length<1||start<0||end>=arr.length||start>end){
+							return null;
+							}
+						var smallIndex = partition(arr,start,end);
+						if(smallIndex>start){
+							QuickSort(arr,start,smallIndex-1);
+						}
+						if(smallIndex<end){
+							QuickSort(arr,smallIndex+1,end);
+						}
+						return arr;
+					}
+					function partition(arr,start,end){
+						var pivot = start+Math.random()*(end-start+1);
+						var smallIndex = start-1;
+						swap(arr,pivot,end);
+						for(var i=start;i<=end;i++){
+							if(arr[i]<=arr[end]){
+								smallIndex++;
+								if(i>smallIndex){
+									swap(arr,i,smallIndex);
+								}
+							}
+							
+						}
+						return smallIndex;
+					}
+					function swap(arr,i,j){
+						var temp = arr[i];
+						arr[i]=arr[j];
+						arr[j]=temp;
+					}
+					console.log(QuickSort(arr,0,arr.length-1))
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+		<style type="text/css">
+			.dg.main *{-webkit-box-sizing:content-box;box-sizing:content-box}
+			.dg.main input{line-height:normal}
+			.dg.main.a{overflow-x:visible}
+		</style>
+	</head>
+	<body >
+		<div id="container" style="height: 730px; margin: 0;background-color: #555555;"></div>
+<!-- 		<div class="dg main" style="width: 245px; position: absolute; right: 5px; top: 0px; z-index: 1000;">
+			<ul>
+				<li >
+					<div>
+						<span>xAxis3D</span>
+						<div>
+							<select id="xAxis3D">
+								<option value ="框架排名">框架排名</option>
+								<option value ="规模">规模</option>
+								<option value ="发展空间">发展空间</option>
+								<option value ="合作意愿">合作意愿</option>
+							</select>
+						</div>
+					</div>
+				</li>
+				<li >
+					<div>
+						<span>yAxis3D</span>
+						<div>
+							<select id="yAxis3D">
+								<option value ="规模">规模</option>
+								<option value ="框架排名">框架排名</option>
+								<option value ="发展空间">发展空间</option>
+								<option value ="合作意愿">合作意愿</option>
+							</select>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div>
+						<span>zAxis3D</span>
+						<div>
+							<select  id="zAxis3D">
+								<option value ="发展空间">发展空间</option>
+								<option value ="框架排名">框架排名</option>
+								<option value ="规模">规模</option>
+								<option value ="合作意愿">合作意愿</option>
+							</select>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div>
+						<span>symbolSize</span>
+						<div>
+							<select id="symbolSize">
+								<option value ="发展空间">发展空间</option>
+								<option value ="框架排名">框架排名</option>
+								<option value ="规模">规模</option>
+								<option value ="合作意愿">合作意愿</option>
+							</select>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div> -->
+		<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+		<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="data.json">
+			
+		</script>
+		<script type="text/javascript">
+			var myChart = echarts.init(document.getElementById('container'));
+			
+			$.get('data.json', function(data) {
+				
+
+				
+				myChart.setOption({
+					visualMap: [{
+						top: 10,
+						calculable: true,
+						dimension: 3,
+						max: 500,
+						inRange: {
+							color: ['#1710c0', '#0b9df0', '#00fea8', '#00ff0d', '#f5f811', '#f09a09', '#fe0300']
+						},
+						textStyle: {
+							color: '#fff'
+						}
+					}, {
+						bottom: 10,
+						calculable: true,
+						dimension: 4,
+						max: 12,
+						inRange: {
+							symbolSize: [10, 40]
+						},
+						textStyle: {
+							color: '#fff'
+						}
+					}],
+					// 需要注意的是我们不能跟 grid 一样省略 grid3D
+					tooltip:{},
+					grid3D: {
+						axisLine: {
+							lineStyle: {
+								color: '#fff'
+							}
+						},
+						axisPointer: {
+							lineStyle: {
+								color: '#ffbd67'
+							}
+						},
+					},
+
+					dataset: {
+						source: data
+					},
+					// 默认情况下, x, y, z 分别是从 0 到 1 的数值轴
+					xAxis3D: {
+						name: '框架排名',
+						type: 'value'
+					},
+					yAxis3D: {
+						name: '规模',
+						type: 'value'
+					},
+					zAxis3D: {
+						name: '发展空间',
+						type: 'value'
+					},
+					series: [{
+						type: 'scatter3D',
+						symbolSize: 25,
+
+						encode: {
+							// 维度的名字默认就是表头的属性名
+							x: '框架排名',
+							y: '规模',
+							z: '发展空间',
+						},
+						itemStyle: {
+							borderWidth: 1,
+							borderColor: 'rgba(0,0,0,0.8)'
+						},
+
+					}]
+				})
+
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript">
+			function test(person){
+				person.age=26;
+				person={
+					age:30,
+					name:'yyy'
+				}
+				
+				return person;
+			}
+			
+			const p1 = {
+				name:'yck',
+				age:25
+			}
+			const p2 = test(p1);
+			console.log(p1);
+			console.log(p2);
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="container"  style="height: 1000px; width: 1000px"></div>
+     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+		<script type="text/javascript">
+			var dom = document.getElementById("container");
+			var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			var indices = {
+			    name: 0,
+			    group: 1,
+			    id: 16
+			};
+			var schema = [
+			    {name: '公司名称', index: 0},
+			    {name: '框架排名', index: 1},
+			    {name: '合作意愿', index: 2},
+			    {name: '发展空间', index: 3},
+			    {name: '规模', index: 4},
+			    {name: '公司id', index: 16}
+			];
+			var fieldIndices = schema.reduce(function (obj, item) {
+			    obj[item.name] = item.index;
+			    return obj;
+			}, {});
+			var fieldNames = schema.map(function (item) {
+			    return item.name;
+			});
+			fieldNames = fieldNames.slice(2, fieldNames.length - 2);
+			var groupCategories = [];
+			var groupColors = [];
+			var data;
+			
+			function getMaxOnExtent(data) {
+			    var colorMax = -Infinity;
+			    var symbolSizeMax = -Infinity;
+			    for (var i = 0; i < data.length; i++) {
+			        var item = data[i];
+			        var colorVal = item[fieldIndices[config.color]];
+			        var symbolSizeVal = item[fieldIndices[config.symbolSize]];
+			        colorMax = Math.max(colorVal, colorMax);
+			        symbolSizeMax = Math.max(symbolSizeVal, symbolSizeMax);
+			    }
+			    return {
+			        color: colorMax,
+			        symbolSize: symbolSizeMax
+			    };
+			}
+			
+			var config = app.config = {
+			    xAxis3D: '公司名称',
+			    yAxis3D: '框架排名',
+			    zAxis3D: '合作意愿',
+			    symbolSize: '规模',
+			
+			    onChange: function () {
+			        var max = getMaxOnExtent(data);
+			        if (data) {
+			            myChart.setOption({
+			                visualMap: [{
+			                    max: max.color / 2
+			                }, {
+			                    max: max.symbolSize / 2
+			                }],
+			                xAxis3D: {
+			                    name: config.xAxis3D
+			                },
+			                yAxis3D: {
+			                    name: config.yAxis3D
+			                },
+			                zAxis3D: {
+			                    name: config.zAxis3D
+			                },
+			                series: {
+			                    dimensions: [
+			                        config.xAxis3D,
+			                        config.yAxis3D,
+			                        config.yAxis3D,
+			                        config.color,
+			                        config.symbolSiz
+			                    ],
+			                    data: data.map(function (item, idx) {
+			                        return [
+			                            item[fieldIndices[config.xAxis3D]],
+			                            item[fieldIndices[config.yAxis3D]],
+			                            item[fieldIndices[config.zAxis3D]],
+			                            item[fieldIndices[config.color]],
+			                            item[fieldIndices[config.symbolSize]],
+			                            idx
+			                        ];
+			                    })
+			                }
+			            });
+			        }
+			    }
+			};
+			app.configParameters = {};
+			['xAxis3D', 'yAxis3D', 'zAxis3D', 'color', 'symbolSize'].forEach(function (fieldName) {
+			    app.configParameters[fieldName] = {
+			        options: fieldNames
+			    };
+			});
+			
+			function get() {
+			    data = [
+					['公司id','公司名称','框架排名','合作意愿','发展空间','规模'],
+					[1,'公司1',1,80,50,200],
+					[2,'公司2',2,90,300,190],
+					[3,'公司3',3,70,100,320],
+					[4,'公司4',4,80,60,190],
+					[5,'公司5',5,90,100,210],
+					[6,'公司6',6,90,100,40],
+					[7,'公司7',7,80,100,120],
+					[8,'公司8',8,70,30,50],
+					[9,'公司9',9,30,80,600],
+					[10,'公司10',10,80,50,150],
+				];
+				
+			    var max = getMaxOnExtent(data);
+			    myChart.setOption({
+			        tooltip: {},
+			        visualMap: [{
+			            bottom: 10,
+			            calculable: true,
+			            dimension: 4,
+			            max: max.symbolSize / 2,
+			            inRange: {
+			                symbolSize: [10, 40]
+			            },
+			            textStyle: {
+			                color: '#fff'
+			            }
+			        }],
+			        xAxis3D: {
+			            name: config.xAxis3D,
+			            type: 'value'
+			        },
+			        yAxis3D: {
+			            name: config.yAxis3D,
+			            type: 'value'
+			        },
+			        zAxis3D: {
+			            name: config.zAxis3D,
+			            type: 'value'
+			        },
+			        grid3D: {
+			            axisLine: {
+			                lineStyle: {
+			                    color: '#fff'
+			                }
+			            },
+			            axisPointer: {
+			                lineStyle: {
+			                    color: '#ffbd67'
+			                }
+			            },
+			            viewControl: {
+			                // autoRotate: true
+			                // projection: 'orthographic'
+			            }
+			        },
+			        series: [{
+			            type: 'scatter3D',
+			            dimensions: [
+			                config.xAxis3D,
+			                config.yAxis3D,
+			                config.yAxis3D,
+			                config.color,
+			                config.symbolSiz
+			            ],
+			            data: data.map(function (item, idx) {
+			                return [
+			                    item[fieldIndices[config.xAxis3D]],
+			                    item[fieldIndices[config.yAxis3D]],
+			                    item[fieldIndices[config.zAxis3D]],
+			                    item[fieldIndices[config.color]],
+			                    item[fieldIndices[config.symbolSize]],
+			                    idx
+			                ];
+			            }),
+			            symbolSize: 12,
+			            // symbol: 'triangle',
+			            itemStyle: {
+			                borderWidth: 1,
+			                borderColor: 'rgba(255,255,255,0.8)'
+			            },
+			            emphasis: {
+			                itemStyle: {
+			                    color: '#fff'
+			                }
+			            }
+			        }]
+			    });
+			}
+			
+			if (option && typeof option === "object") {
+			    myChart.setOption(option, true);
+			}
+		</script>
+	</body>
+</html>
